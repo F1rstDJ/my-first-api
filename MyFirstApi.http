@@ -1,0 +1,39 @@
+@MyFirstApi_HostAddress = http://localhost:5151
+
+### 1. Получить все товары
+GET {{MyFirstApi_HostAddress}}/api/product
+
+### 2. Получить товар по ID
+GET {{MyFirstApi_HostAddress}}/api/product/1
+
+### 3. Получить товары по категории
+GET {{MyFirstApi_HostAddress}}/api/product/category/laptop
+
+### 4. Создать товар
+POST {{MyFirstApi_HostAddress}}/api/product
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro",
+  "price": 120000,
+  "category": "phones"
+}
+
+### 5. Обновить товар
+PUT {{MyFirstApi_HostAddress}}/api/product/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "MacBook Pro 16 M4",
+  "price": 350000,
+  "category": "laptop"
+}
+
+### 6. Удалить товар
+DELETE {{MyFirstApi_HostAddress}}/api/product/2
+
+###
+GET {{MyFirstApi_HostAddress}}/api/Product/categorys/laptop
+
+
