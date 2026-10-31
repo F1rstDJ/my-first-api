@@ -25,7 +25,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetById(int id)
     {
         var product = await _context.Products.FindAsync(id);
-        if (product == null) return NotFound();
+     
         return Ok(product);
     }
 
@@ -34,7 +34,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetByCategory(string category)
     {
         var products = await _context.Products
-            .Where(p => p.Category == category)
+            .Where(p => p.Category != null && p.Category.Name == category)
             .ToListAsync();
         return Ok(products);
     }
@@ -55,7 +55,7 @@ public class ProductController : ControllerBase
         if (id != product.Id) return BadRequest();
         
         var existing = await _context.Products.FindAsync(id);
-        if (existing == null) return NotFound();
+     
         
         existing.Name = product.Name;
         existing.Price = product.Price;
@@ -70,7 +70,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var product = await _context.Products.FindAsync(id);
-        if (product == null) return NotFound();
+        
 
         _context.Products.Remove(product);
         await _context.SaveChangesAsync();
@@ -91,9 +91,6 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetByPrice(decimal minPrice)
     {
         var pr =await  _context.Products.Where(p => p.Price > minPrice).ToListAsync();
-        
-        if(pr ==null) return NoContent();
-        
         return Ok(pr);
     }
 
@@ -101,8 +98,6 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetTop()
     {
         var prod = await _context.Products.OrderByDescending(p => p.Price).Take(3).ToListAsync();
-        
-        if(prod.Count==0) return NoContent();
         
         return Ok(prod);
     }
@@ -115,6 +110,8 @@ public class ProductController : ControllerBase
         return Ok(p);
     }
 
+    
+    
 
 
 
